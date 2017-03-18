@@ -1,0 +1,8 @@
+[
+{
+	class: com.nsoft.boxuniverse.misc.SoundDefinition
+	SoundPath: com/nsoft/boxuniverse/resources/drop.mp3
+	TexturePath: null
+	Sound: DropSound
+}
+]

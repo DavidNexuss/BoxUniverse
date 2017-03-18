@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.nsoft.boxuniverse.misc.BaseSound;
 import com.nsoft.boxuniverse.world.BaseActor;
 import com.nsoft.boxuniverse.world.GameStage;
 
@@ -15,6 +16,7 @@ public class Game extends ApplicationAdapter {
 		
 		stage = new GameStage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		stage.debug();
+		BaseSound.loadSounds();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 	
