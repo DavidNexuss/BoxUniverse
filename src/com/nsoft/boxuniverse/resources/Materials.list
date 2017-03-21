@@ -1,0 +1,7 @@
+{
+materials: {
+	Stone: {
+		path: BlaBla
+	}
+}
+}

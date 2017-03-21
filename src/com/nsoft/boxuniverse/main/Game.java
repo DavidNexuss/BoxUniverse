@@ -15,9 +15,12 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create() {
 		
-		world = new BaseWorld();
+		Init.LoadEverything();
+		
+		world = new BaseWorld(3);
 		Gdx.input.setInputProcessor(world);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
+		
 	}
 	
 	@Override

@@ -22,6 +22,7 @@ public class BaseBlock extends BaseObject implements Disposable{
 	
 	Model model;
 	ModelInstance instance;
+	
 	public BaseBlock(BlockDefinition b, int Z) {
 		
 		this.Z = Z;
@@ -60,9 +61,9 @@ public class BaseBlock extends BaseObject implements Disposable{
 class BlockDefinition{
 	
 	int X;
-	int Y;
+	int Y; 
 	int width;
-	int height;
-	int depth;
+	int height; 
+	int depth; 
 	Color color; //Just for debugging
 }
