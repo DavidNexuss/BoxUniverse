@@ -1,7 +1,19 @@
 {
 materials: {
-	Stone: {
-		path: BlaBla
+	
+	CrackedStone: {
+		path: com/nsoft/boxuniverse/resources/materials/Block.png
+		restitution: 1
+		friction: 0
+	}
+	
+	Brick: {
+		path: com/nsoft/boxuniverse/resources/materials/default.png
+	}
+	
+	Glass: {
+		path: com/nsoft/boxuniverse/resources/materials/Glass.png
+		hasAlpha: true
 	}
 }
 }

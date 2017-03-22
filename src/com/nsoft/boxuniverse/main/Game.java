@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.nsoft.boxuniverse.misc.BaseSound;
 import com.nsoft.boxuniverse.world.BaseWorld;
@@ -12,6 +13,8 @@ import com.nsoft.boxuniverse.world.BaseWorld;
 public class Game extends ApplicationAdapter {
 
 	BaseWorld world;
+	public static Json MainJson = new Json();
+	
 	@Override
 	public void create() {
 		

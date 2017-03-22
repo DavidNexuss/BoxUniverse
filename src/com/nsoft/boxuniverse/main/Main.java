@@ -23,6 +23,7 @@ public class Main {
 	
 	public static void debug(){
 
+		
 	}
 
 }

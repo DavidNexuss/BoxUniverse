@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.nsoft.boxuniverse.misc.BaseMaterial;
 
 public class BaseWorld implements InputProcessor {
 
@@ -28,7 +29,7 @@ public class BaseWorld implements InputProcessor {
 		layers = new Layer[numlayers];
 		
 		b = new ModelBatch();
-		 cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		 cam = new PerspectiveCamera(50, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	        cam.position.set(0, 0, 10);
 	        cam.lookAt(0,0,0);
 	        cam.near = 1f;
@@ -65,29 +66,17 @@ public class BaseWorld implements InputProcessor {
 	public void debug(){
 		
 		BlockDefinition a = new BlockDefinition();
-		a.color = new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), 1);
+     	a.material = BaseMaterial.load(BaseMaterial.getNameFromIndex((int)(Math.random() * BaseMaterial.getListSize())));
 		a.depth  = 1;
 		a.width = 1;
 		a.height = 1;
 	
 		a.X = (int) (Math.random()*10) -5;
 		a.Y = (int) (Math.random()*10) -5;
-				
-		layers[(int) (Math.random()*LayerNumber)].addNewBlock(a);
 		
-		new Thread(()->{
-			
-			while(true){
-				
-				try {
-					
-					System.out.println(Gdx.graphics.getFramesPerSecond());
-					Thread.sleep(1000);
-				} catch (Exception e) {
-				
-				}
-			}
-		}).start();
+		int index = (int) (Math.random()*LayerNumber);
+		a.world = layers[index].mundo;
+		layers[index].addNewBlock(a);
 
 	}
 
