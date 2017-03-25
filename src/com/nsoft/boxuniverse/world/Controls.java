@@ -15,7 +15,7 @@ public class Controls {
 		
 		//No se usa else if para asi poder hacer movimientos en diagonal
 		
-		delta *= 2;
+		delta *= pc.position.z/2;
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			pc.translate(0, delta, 0);
 			

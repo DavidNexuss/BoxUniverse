@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.nsoft.boxuniverse.misc.BaseMaterial;
 
 public class BaseWorld implements InputProcessor {
@@ -21,6 +23,7 @@ public class BaseWorld implements InputProcessor {
 	PerspectiveCamera cam;
 	ModelBatch b;
 	static Environment e;
+	static int layerSelector = 0;
 	static Thread InputManager;
 	
 	public BaseWorld(int numlayers) {
@@ -29,7 +32,7 @@ public class BaseWorld implements InputProcessor {
 		layers = new Layer[numlayers];
 		
 		b = new ModelBatch();
-		 cam = new PerspectiveCamera(50, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		 cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	        cam.position.set(0, 0, 10);
 	        cam.lookAt(0,0,0);
 	        cam.near = 1f;
@@ -79,6 +82,22 @@ public class BaseWorld implements InputProcessor {
 		layers[index].addNewBlock(a);
 
 	}
+	
+	public void debug(int x, int y){
+		BlockDefinition a = new BlockDefinition();
+     	a.material = BaseMaterial.load(BaseMaterial.getNameFromIndex((int)(Math.random() * BaseMaterial.getListSize())));
+		a.depth  = 1;
+		a.width = 1;
+		a.height = 1;
+		Ray ray = cam.getPickRay(x, y);
+		Vector3 pos = new Vector3();
+		a.X = (int) ray.getEndPoint(pos, -ray.origin.z * 2 / ray.direction.z).x;
+		a.Y =  (int) ray.getEndPoint(pos, -ray.origin.z *2 / ray.direction.z).y;
+
+		a.world = layers[layerSelector].mundo;
+		layers[layerSelector].addNewBlock(a);
+		
+	}
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -89,7 +108,20 @@ public class BaseWorld implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		
-		return false;
+		if(keycode == Keys.R){
+			
+			for (int i = 0; i < layers.length; i++) {
+				
+				layers[i] = new Layer(i);
+			}
+		}else if(keycode == Keys.PLUS){
+			
+			if(layerSelector + 1 < layers.length) layerSelector++;
+		}else if(keycode == Keys.MINUS){
+			
+			if(layerSelector > 0)layerSelector--;
+		}
+		return true;
 	}
 
 	@Override
@@ -104,7 +136,7 @@ public class BaseWorld implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		debug();
+		debug(screenX,screenY);
 		return true;
 	}
 
@@ -121,7 +153,7 @@ public class BaseWorld implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		
-		cam.translate(0, 0, amount);
+		cam.translate(0, 0, amount*((cam.position.z + amount/2)/(cam.position.z)));
 		cam.update();
 		return true;
 	}

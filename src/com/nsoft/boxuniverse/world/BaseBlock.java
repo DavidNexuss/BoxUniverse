@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -63,8 +64,12 @@ public class BaseBlock extends BaseObject implements Disposable{
 
 	@Override
 	public void draw(ModelBatch mb) {
-		instance.transform.setToRotation(Vector3.Z, MathUtils.radiansToDegrees * block.body.getAngle());
-		instance.transform.setTranslation(block.getPos(Axis.X), block.getPos(Axis.Y), Z);
+		
+		if(block.body.isAwake()){
+			instance.transform.setToRotation(Vector3.Z, MathUtils.radiansToDegrees * block.body.getAngle());
+			instance.transform.setTranslation(block.getPos(Axis.X), block.getPos(Axis.Y), Z);
+		
+		}
 		
 		mb.render(instance,BaseWorld.e);
 		
@@ -113,9 +118,10 @@ class PhysicalBlock{
 		PolygonShape s = new PolygonShape();
 		s.setAsBox(b.width, b.height);
 		
-		fixdef.friction = b.material.getProperty("friction", Float.class);
-		fixdef.density = b.material.getProperty("density",Float.class);
-		fixdef.restitution = b.material.getProperty("restitution", Float.class);
+		fixdef.friction = b.material.material.friction;
+		fixdef.density = b.material.material.density;
+		fixdef.restitution = b.material.material.restitution;
+		
 		fixdef.shape = s;
 		
 		body.createFixture(fixdef);

@@ -3,17 +3,28 @@ materials: {
 	
 	CrackedStone: {
 		path: com/nsoft/boxuniverse/resources/materials/Block.png
-		restitution: 1
-		friction: 0
 	}
 	
 	Brick: {
 		path: com/nsoft/boxuniverse/resources/materials/default.png
+		density: 5
 	}
 	
 	Glass: {
 		path: com/nsoft/boxuniverse/resources/materials/Glass.png
 		hasAlpha: true
+	}
+	
+	Ice: {
+		path: com/nsoft/boxuniverse/resources/materials/Ice.png
+		hasAlpha: true
+		friction: 0.1f
+	}
+	
+	Slime: {
+		path: com/nsoft/boxuniverse/resources/materials/Slime.png
+		hasAlpha: true
+		//restitution: 0.9f
 	}
 }
 }
