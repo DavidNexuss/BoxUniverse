@@ -20,7 +20,7 @@ public class Game extends ApplicationAdapter {
 		
 		Init.LoadEverything();
 		
-		world = new BaseWorld(5);
+		world = new BaseWorld(3);
 		Gdx.input.setInputProcessor(world);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		

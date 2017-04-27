@@ -1,33 +1,30 @@
 package com.nsoft.boxuniverse.misc;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.glutils.VertexArray;
-import com.badlogic.gdx.utils.Json;
 import com.nsoft.boxuniverse.main.Game;
 
+
+/**
+ * BaseMaterial Class
+ * @author DavidNexus
+ *
+ */
 public class BaseMaterial {
 
-	public static MaterialsList materials;
-	public static HashMap<String, BaseMaterial>worldmaterials= new HashMap<>();
+	public static MaterialsList materials; //Pre-Cached Materials List
+	public static HashMap<String, BaseMaterial>worldmaterials= new HashMap<>(); //Cached Materials
 	
 	public MaterialDefinition material;
-	Material RealMaterial;
+	Material RealMaterial; //G3D RealMaterial
 	
-	Texture t;
+	public Texture t;
 	
 	public BaseMaterial(String name){
 		

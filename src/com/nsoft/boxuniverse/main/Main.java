@@ -14,8 +14,8 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-	//	config.setWindowedMode(1280, 720);
-		config.setFullscreenMode( Lwjgl3ApplicationConfiguration.getDisplayMode());
+		config.setWindowedMode(1280, 720);
+		//config.setFullscreenMode( Lwjgl3ApplicationConfiguration.getDisplayMode());
 		config.setTitle("Box Universe");
 		config.useOpenGL3(true, 3, 2);
 		app = new Lwjgl3Application(new Game(), config);

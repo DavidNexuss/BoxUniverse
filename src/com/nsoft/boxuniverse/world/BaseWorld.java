@@ -7,6 +7,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -14,22 +16,40 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.nsoft.boxuniverse.misc.BaseMaterial;
-
+/**
+ * 
+ * @author DavidNexus
+ * 
+ * Controls:
+ * 
+ * # (+) Add 1 layer counter
+ * # (-) Remove 1 frome layer counter
+ * # (P) Add 1 to materials counter
+ * # (O) Remove 1 to materials counter
+ */
 public class BaseWorld implements InputProcessor {
 
 	int LayerNumber;
 	Layer[] layers;
 	
 	PerspectiveCamera cam;
+	SpriteBatch batch;
+	Texture background;
 	ModelBatch b;
 	static Environment e;
 	static int layerSelector = 0;
+	static int MaterialSelector = 0;
 	static Thread InputManager;
 	
 	public BaseWorld(int numlayers) {
 		
+		
+		
 		LayerNumber = numlayers;
 		layers = new Layer[numlayers];
+		
+		batch = new SpriteBatch();
+		background = new Texture("com/nsoft/boxuniverse/resources/materials/background.jpg");
 		
 		b = new ModelBatch();
 		 cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -54,12 +74,32 @@ public class BaseWorld implements InputProcessor {
 	
 	public void render(){
 		
+		/*
+		 * Rendering background
+		 */
+		batch.begin();
+		//	batch.setProjectionMatrix(cam.projection);
+			
+		batch.draw(background, 0, 0);
+		batch.end();
+
+		/*
+		 * Renders map
+		 */
 		b.begin(cam);
 		for (Layer layer : layers) {
 			layer.render(b);
 		}
+	
 		b.end();
 		
+		
+		batch.begin();
+		batch.draw(BaseMaterial.load(BaseMaterial.getNameFromIndex(MaterialSelector)).t, 20, Gdx.graphics.getHeight() - 20 - 64, 64, 64);
+		batch.end();
+		/*
+		 * Test camera controls
+		 */
 		Controls.CamTest(cam,Gdx.graphics.getDeltaTime());
 	}
 	
@@ -85,14 +125,14 @@ public class BaseWorld implements InputProcessor {
 	
 	public void debug(int x, int y){
 		BlockDefinition a = new BlockDefinition();
-     	a.material = BaseMaterial.load(BaseMaterial.getNameFromIndex((int)(Math.random() * BaseMaterial.getListSize())));
+     	a.material = BaseMaterial.load(BaseMaterial.getNameFromIndex(MaterialSelector));
 		a.depth  = 1;
 		a.width = 1;
 		a.height = 1;
-		Ray ray = cam.getPickRay(x, y);
+		Ray ray = cam.getPickRay(x*2 - Gdx.graphics.getWidth()/2 + cam.position.x*2, y*2 - Gdx.graphics.getHeight()/2 + cam.position.y*2);
 		Vector3 pos = new Vector3();
-		a.X = (int) ray.getEndPoint(pos, -ray.origin.z * 2 / ray.direction.z).x;
-		a.Y =  (int) ray.getEndPoint(pos, -ray.origin.z *2 / ray.direction.z).y;
+		a.X = (int) ray.getEndPoint(pos, -ray.origin.z / ray.direction.z).x;
+		a.Y =  (int) ray.getEndPoint(pos, -ray.origin.z / ray.direction.z).y;
 
 		a.world = layers[layerSelector].mundo;
 		layers[layerSelector].addNewBlock(a);
@@ -114,12 +154,22 @@ public class BaseWorld implements InputProcessor {
 				
 				layers[i] = new Layer(i);
 			}
-		}else if(keycode == Keys.PLUS){
+		}
+		else if(keycode == Keys.PLUS){
 			
 			if(layerSelector + 1 < layers.length) layerSelector++;
-		}else if(keycode == Keys.MINUS){
+		}
+		else if(keycode == Keys.MINUS){
 			
 			if(layerSelector > 0)layerSelector--;
+		}
+		else if(keycode == Keys.P){
+			
+			if(MaterialSelector < BaseMaterial.getListSize()-1) MaterialSelector++;
+		}
+		else if(keycode == Keys.O){
+			
+			if(MaterialSelector > 0) MaterialSelector--;
 		}
 		return true;
 	}

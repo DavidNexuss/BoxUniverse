@@ -24,7 +24,7 @@ materials: {
 	Slime: {
 		path: com/nsoft/boxuniverse/resources/materials/Slime.png
 		hasAlpha: true
-		//restitution: 0.9f
+		restitution: 0.9f
 	}
 }
 }
