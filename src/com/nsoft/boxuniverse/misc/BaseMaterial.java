@@ -23,11 +23,12 @@ public class BaseMaterial {
 	
 	public MaterialDefinition material;
 	Material RealMaterial; //G3D RealMaterial
-	
 	public Texture t;
+	public String materialName;
 	
 	public BaseMaterial(String name){
 		
+		materialName = name;
 		material = materials.materials.get(name);
 		t = new Texture(Gdx.files.internal(material.path));
 		

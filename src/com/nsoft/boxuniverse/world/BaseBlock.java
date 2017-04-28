@@ -28,14 +28,19 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.utils.Disableable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.nsoft.boxuniverse.misc.BaseMaterial;
 
 public class BaseBlock extends BaseObject implements Disposable{
 
 	static ModelBuilder builder = new ModelBuilder();;
-	
+	static final String RANDOM = "RN";
+	static int blockCount = 0;
 	int Z;
+	String name;
 	BlockDefinition b;
 
 	Model model;
@@ -43,8 +48,9 @@ public class BaseBlock extends BaseObject implements Disposable{
 	PhysicalBlock block;
 	ModelInstance instance;
 	
-	public BaseBlock(BlockDefinition b, int Z) {
+	public BaseBlock(BlockDefinition b, int Z,String name) {
 		
+		blockCount++;
 		this.Z = Z;
 		this.b = b;
 		basematerial = b.material;
@@ -54,7 +60,14 @@ public class BaseBlock extends BaseObject implements Disposable{
 		instance.nodes.get(0).parts.get(0).material.set(basematerial.getMaterial());
 		setPosition(b.X, b.Y, 0);
 		
+		if(name.equals(RANDOM)){
+			
+			name = String.valueOf(blockCount);
+		}
 		
+		this.name = name;
+		
+		WorldLoader.WorldLoader.BlockList.put(name, b);
 	}
 	
 	@Override
@@ -88,25 +101,45 @@ public class BaseBlock extends BaseObject implements Disposable{
 	}
 	
 	
+	static class BlockDefinition implements Serializable{
+		
+		int X;
+		int Y;
+		int Z;
+		int width;
+		int height; 
+		int depth; 
+		BaseMaterial material;
+		World world;
+		boolean isStatic;
+		
+		@Override
+		public void write(Json json) {
+
+			json.writeValue("Position",new int[]{X,Y,Z});
+			json.writeValue("Size",new int[]{width,height,depth});
+			json.writeValue("MaterialName",material.materialName);
+			json.writeValue("IsStatic",isStatic);
+		}
+		@Override
+		public void read(Json json, JsonValue jsonData) {
+			
+			
+		}
+		
+		
+
+	}
+	
 }
 
-class BlockDefinition{
-	
-	int X;
-	int Y; 
-	int width;
-	int height; 
-	int depth; 
-	BaseMaterial material;
-	World world;
-	boolean isStatic;
-}
+
 
 class PhysicalBlock{
 	
 	Body body;
 	
-	public PhysicalBlock(BlockDefinition b) {
+	public PhysicalBlock(BaseBlock.BlockDefinition b) {
 		
 		BodyDef def = new BodyDef();
 		def.type = b.isStatic ? BodyType.StaticBody: BodyType.DynamicBody;

@@ -13,7 +13,7 @@ public class Layer {
 	
 	int Z;
 	static Vector2 gravity = new Vector2(0, -9.8f);
-	static BlockDefinition ground;
+	static BaseBlock.BlockDefinition ground;
 	public World mundo;
 	Box2DDebugRenderer renderer;
 	private ArrayList<BaseObject> objects;
@@ -35,9 +35,9 @@ public class Layer {
 		objects.add(B);
 	}
 	
-	public void addNewBlock(BlockDefinition B){
+	public void addNewBlock(BaseBlock.BlockDefinition B){
 		
-		objects.add(new BaseBlock(B, Z));
+		objects.add(new BaseBlock(B, Z, BaseBlock.RANDOM));
 	}
 	public void render(ModelBatch mb){
 		
@@ -52,7 +52,7 @@ public class Layer {
 	
 	public static void init(){
 		
-		ground = new BlockDefinition();
+		ground = new BaseBlock.BlockDefinition();
 		ground.material = BaseMaterial.load("Brick");
 		ground.depth  = 1;
 		ground.width = 20;

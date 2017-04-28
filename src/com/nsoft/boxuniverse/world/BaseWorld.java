@@ -29,7 +29,8 @@ import com.nsoft.boxuniverse.misc.BaseMaterial;
  */
 public class BaseWorld implements InputProcessor {
 
-	int LayerNumber;
+
+	public WorldDefinition def;
 	Layer[] layers;
 	
 	PerspectiveCamera cam;
@@ -41,15 +42,13 @@ public class BaseWorld implements InputProcessor {
 	static int MaterialSelector = 0;
 	static Thread InputManager;
 	
-	public BaseWorld(int numlayers) {
+	public BaseWorld(WorldDefinition def) {
 		
-		
-		
-		LayerNumber = numlayers;
-		layers = new Layer[numlayers];
+		this.def = def;
+		layers = new Layer[def.NumLayers];
 		
 		batch = new SpriteBatch();
-		background = new Texture("com/nsoft/boxuniverse/resources/materials/background.jpg");
+		background = new Texture(def.BackGroundPath);
 		
 		b = new ModelBatch();
 		 cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -108,7 +107,7 @@ public class BaseWorld implements InputProcessor {
 	 */
 	public void debug(){
 		
-		BlockDefinition a = new BlockDefinition();
+		BaseBlock.BlockDefinition a = new BaseBlock.BlockDefinition();
      	a.material = BaseMaterial.load(BaseMaterial.getNameFromIndex((int)(Math.random() * BaseMaterial.getListSize())));
 		a.depth  = 1;
 		a.width = 1;
@@ -117,14 +116,14 @@ public class BaseWorld implements InputProcessor {
 		a.X = (int) (Math.random()*10) -5;
 		a.Y = (int) (Math.random()*10) -5;
 		
-		int index = (int) (Math.random()*LayerNumber);
+		int index = (int) (Math.random()*def.NumLayers);
 		a.world = layers[index].mundo;
 		layers[index].addNewBlock(a);
 
 	}
 	
 	public void debug(int x, int y){
-		BlockDefinition a = new BlockDefinition();
+		BaseBlock.BlockDefinition a = new BaseBlock.BlockDefinition();
      	a.material = BaseMaterial.load(BaseMaterial.getNameFromIndex(MaterialSelector));
 		a.depth  = 1;
 		a.width = 1;
@@ -170,6 +169,11 @@ public class BaseWorld implements InputProcessor {
 		else if(keycode == Keys.O){
 			
 			if(MaterialSelector > 0) MaterialSelector--;
+		}
+		
+		else if(keycode == Keys.L){
+			
+			WorldLoader.save();
 		}
 		return true;
 	}
