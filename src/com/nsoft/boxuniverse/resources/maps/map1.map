@@ -1,0 +1,38 @@
+{
+WorldDefinition: {
+	NumLayers: 3
+	BackGroundPath: src/com/nsoft/boxuniverse/resources/materials/background.jpg
+}
+BlockList: {
+	BlockList: {
+		1: {
+			Position: [ 0, -10, 0 ]
+			Size: [ 20, 1, 1 ]
+			MaterialName: Brick
+			IsStatic: true
+		}
+		2: {
+			Position: [ 0, -10, 0 ]
+			Size: [ 20, 1, 1 ]
+			MaterialName: Brick
+			IsStatic: true
+		}
+		3: {
+			Position: [ 0, -10, 0 ]
+			Size: [ 20, 1, 1 ]
+			MaterialName: Brick
+			IsStatic: true
+		}
+		4: {
+			Position: [ -5, -3, 0 ]
+			Size: [ 1, 1, 1 ]
+			MaterialName: Glass
+			IsStatic: false
+		}
+	}
+}
+MetaData: {
+	Author: DavidNexus
+	Date Of Creation: 2017/04/28 14:27:51
+}
+}

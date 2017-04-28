@@ -67,7 +67,7 @@ public class BaseBlock extends BaseObject implements Disposable{
 		
 		this.name = name;
 		
-		WorldLoader.WorldLoader.BlockList.put(name, b);
+		WorldLoader.WorldLoader.BlockList.BlockList.put(name, b);
 	}
 	
 	@Override
@@ -124,7 +124,25 @@ public class BaseBlock extends BaseObject implements Disposable{
 		@Override
 		public void read(Json json, JsonValue jsonData) {
 			
+			jsonData = jsonData.child;
 			
+			X = jsonData.asIntArray()[0];
+			Y = jsonData.asIntArray()[1];
+			Z = jsonData.asIntArray()[2];
+			
+			jsonData = jsonData.next;
+			
+			width = jsonData.child.next.asIntArray()[0];
+			height = jsonData.child.next.asIntArray()[1];
+			depth = jsonData.child.next.asIntArray()[2];
+			
+			jsonData = jsonData.next;
+			
+			BaseMaterial.load(jsonData.asString());
+			
+			jsonData =  jsonData.next;
+			
+			isStatic = jsonData.asBoolean();
 		}
 		
 		

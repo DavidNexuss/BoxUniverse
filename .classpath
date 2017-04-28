@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/Phisx/libs/box2d/box2dlights-1.5-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Phisx/libs/box2d/gdx-box2d-natives.jar"/>
+	<classpathentry kind="lib" path="/Phisx/libs/box2d/gdx-box2d.jar"/>
+	<classpathentry kind="lib" path="/Phisx/libs/gdx-backend-lwjgl3.jar"/>
+	<classpathentry kind="lib" path="/Phisx/libs/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="/Phisx/libs/gdx-sources.jar"/>
+	<classpathentry kind="lib" path="/Phisx/libs/gdx.jar" sourcepath="/Phisx/libs/gdx-sources.jar"/>
+	<classpathentry kind="lib" path="/Phisx/libs/lwjgl-natives.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

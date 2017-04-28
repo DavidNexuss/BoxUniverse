@@ -1,10 +1,13 @@
 package com.nsoft.boxuniverse.world;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Json.Serializable;
@@ -18,8 +21,7 @@ import com.nsoft.boxuniverse.main.Game;
 public class WorldLoader implements Serializable{
 	
 	public static WorldLoader WorldLoader = new WorldLoader();
-	
-	public HashMap<String, BaseBlock.BlockDefinition> BlockList = new HashMap<String,BaseBlock.BlockDefinition>();
+	public Blocks BlockList = new Blocks();
 	public MetaData MetaData = new MetaData();
 	public WorldDefinition WorldDefinition;
 	
@@ -37,6 +39,10 @@ public class WorldLoader implements Serializable{
 	@Override
 	public void read(Json json, JsonValue jsonData) {
 		
+		jsonData = jsonData.child;
+		WorldDefinition = json.readValue("WorldDefinition", WorldDefinition.class, jsonData);
+		jsonData = jsonData.next;
+		
 		
 	}
 	
@@ -53,10 +59,30 @@ public class WorldLoader implements Serializable{
 	public static void save(){
 
 		Game.MainJson.setElementType(WorldLoader.class, "BlockList", BaseBlock.BlockDefinition.class);
-		System.out.println(Game.MainJson.prettyPrint(WorldLoader));
+		
+		try {
+			
+			File a = new File("src/com/nsoft/boxuniverse/resources/maps/map1.map");
+			FileOutputStream salida = new FileOutputStream(a);
+			salida.write(Game.MainJson.prettyPrint(WorldLoader).getBytes());
+			salida.flush();
+			salida.close();
+			
+		} catch (Exception e) {
+			
+		}
 	}
 	
+	public static void load(){
+		
+		WorldLoader = Game.MainJson.fromJson(WorldLoader.class, Gdx.files.internal("com/nsoft/boxuniverse/resources/Materials.list"));
+	}
 	
+	static class Blocks{
+		
+		public HashMap<String, BaseBlock.BlockDefinition> BlockList = new HashMap<String,BaseBlock.BlockDefinition>();
+
+	}
 	static class MetaData implements Serializable{
 		
 		String author = System.getProperty("user.name");
@@ -73,6 +99,8 @@ public class WorldLoader implements Serializable{
 		@Override
 		public void read(Json json, JsonValue jsonData) {
 			
+			author = jsonData.child.asString();
+			date = jsonData.child.next.asString();
 		}
 		
 		
