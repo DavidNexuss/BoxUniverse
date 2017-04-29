@@ -53,6 +53,7 @@ public class BaseBlock extends BaseObject implements Disposable{
 		blockCount++;
 		this.Z = Z;
 		this.b = b;
+		b.Z = Z;
 		basematerial = b.material;
 		block = new PhysicalBlock(b);
 		model = builder.createBox(b.width, b.height, b.depth,basematerial.getMaterial(), Usage.Normal | Usage.Position | Usage.TextureCoordinates);
@@ -67,7 +68,7 @@ public class BaseBlock extends BaseObject implements Disposable{
 		
 		this.name = name;
 		
-		WorldLoader.WorldLoader.BlockList.BlockList.put(name, b);
+		if(!WorldLoader.WorldLoader.BlockInformation.BlockList.containsKey(name))WorldLoader.WorldLoader.BlockInformation.BlockList.put(name, b);
 	}
 	
 	@Override
@@ -95,57 +96,85 @@ public class BaseBlock extends BaseObject implements Disposable{
 	}
 
 	@Override
-	public void setPosition(int x, int y, int z) {
+	public void setPosition(float x, float y, int z) {
 		
 		instance.transform.setTranslation(x, y, Z);
 	}
 	
-	
+	@Override
+	public void saveStatus(){
+		
+		b.X = block.getPos(Axis.X)*2;
+		b.Y = block.getPos(Axis.Y)*2;
+		b.Angle = block.getAngle()*MathUtils.radiansToDegrees;
+	}
 	static class BlockDefinition implements Serializable{
 		
-		int X;
-		int Y;
-		int Z;
-		int width;
-		int height; 
-		int depth; 
+		float X;
+		float Y;
+		float Z;
+		float Angle = 0;
+		int width = 1;
+		int height = 1; 
+		int depth = 1; 
 		BaseMaterial material;
 		World world;
 		boolean isStatic;
 		
+		public BlockDefinition() {}
+		
 		@Override
 		public void write(Json json) {
 
-			json.writeValue("Position",new int[]{X,Y,Z});
+			json.writeValue("Position",new float[]{X,Y,Z});
 			json.writeValue("Size",new int[]{width,height,depth});
+			if(Angle != 0) json.writeValue("Angle", Angle);
 			json.writeValue("MaterialName",material.materialName);
 			json.writeValue("IsStatic",isStatic);
 		}
 		@Override
 		public void read(Json json, JsonValue jsonData) {
 			
+
 			jsonData = jsonData.child;
 			
-			X = jsonData.asIntArray()[0];
-			Y = jsonData.asIntArray()[1];
-			Z = jsonData.asIntArray()[2];
+			X = jsonData.asFloatArray()[0];
+			Y = jsonData.asFloatArray()[1];
+			Z = jsonData.asFloatArray()[2];
 			
 			jsonData = jsonData.next;
-			
-			width = jsonData.child.next.asIntArray()[0];
-			height = jsonData.child.next.asIntArray()[1];
-			depth = jsonData.child.next.asIntArray()[2];
-			
+
+			width = jsonData.asIntArray()[0];
+			height = jsonData.asIntArray()[1];
+			depth = jsonData.asIntArray()[2];
+
 			jsonData = jsonData.next;
 			
-			BaseMaterial.load(jsonData.asString());
+			if(jsonData.name.equals("Angle")){
+				
+				Angle = jsonData.asFloat();
+				jsonData = jsonData.next;
+			}
+			material = BaseMaterial.load(jsonData.asString());
 			
 			jsonData =  jsonData.next;
 			
 			isStatic = jsonData.asBoolean();
+
 		}
 		
-		
+		public BlockDefinition clone(){
+			
+			try {
+				
+				return (BlockDefinition)super.clone();
+			
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+		}
 
 	}
 	
@@ -162,7 +191,7 @@ class PhysicalBlock{
 		BodyDef def = new BodyDef();
 		def.type = b.isStatic ? BodyType.StaticBody: BodyType.DynamicBody;
 		def.position.set(b.X, b.Y);
-		
+		def.angle = b.Angle*MathUtils.degreesToRadians;
 		body = b.world.createBody(def);
 		
 		FixtureDef fixdef = new FixtureDef();
@@ -177,6 +206,8 @@ class PhysicalBlock{
 		
 		body.createFixture(fixdef);
 		
+		
+		
 	}
 	
 	public float getPos(Axis a){
@@ -188,6 +219,11 @@ class PhysicalBlock{
 			
 			return body.getPosition().y/2;
 		
+	}
+	
+	public float getAngle(){
+		
+		return body.getAngle();
 	}
 	
 }

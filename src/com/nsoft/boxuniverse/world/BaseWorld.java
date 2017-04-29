@@ -15,7 +15,10 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
+import com.jcraft.jorbis.Block;
+import com.nsoft.boxuniverse.main.Game;
 import com.nsoft.boxuniverse.misc.BaseMaterial;
+import com.nsoft.boxuniverse.world.BaseBlock.BlockDefinition;
 /**
  * 
  * @author DavidNexus
@@ -42,7 +45,7 @@ public class BaseWorld implements InputProcessor {
 	static int MaterialSelector = 0;
 	static Thread InputManager;
 	
-	public BaseWorld(WorldDefinition def) {
+	public BaseWorld(WorldDefinition def,boolean needGeneration) {
 		
 		this.def = def;
 		layers = new Layer[def.NumLayers];
@@ -64,11 +67,11 @@ public class BaseWorld implements InputProcessor {
 	     
 	     for (int i = 0; i < layers.length; i++) {
 			
-	    	 layers[i] = new Layer(i);
+	    	 layers[i] = new Layer(i,needGeneration);
 		}
 	     
 	   
-	     debug();
+	    // debug();
 	}
 	
 	public void render(){
@@ -151,7 +154,7 @@ public class BaseWorld implements InputProcessor {
 			
 			for (int i = 0; i < layers.length; i++) {
 				
-				layers[i] = new Layer(i);
+				layers[i] = new Layer(i,true);
 			}
 		}
 		else if(keycode == Keys.PLUS){
@@ -173,7 +176,16 @@ public class BaseWorld implements InputProcessor {
 		
 		else if(keycode == Keys.L){
 			
+			foreach((b) ->{
+				
+				b.saveStatus();
+			});
 			WorldLoader.save();
+		}
+		
+		else if(keycode == Keys.Y){
+			
+			Game.LoadMap("src/com/nsoft/boxuniverse/resources/maps/map1.map");
 		}
 		return true;
 	}
@@ -210,5 +222,19 @@ public class BaseWorld implements InputProcessor {
 		cam.translate(0, 0, amount*((cam.position.z + amount/2)/(cam.position.z)));
 		cam.update();
 		return true;
+	}
+
+	public void handleBlockCreation(BlockDefinition value,String name) {
+		
+		value.world = layers[(int) value.Z].mundo;
+		layers[(int) value.Z].addLoadedBlock(value,name);
+	}
+	
+	public void foreach(Act act){
+		
+		for (Layer layer : layers) {
+			
+			layer.foreach(act);
+		}
 	}
 }

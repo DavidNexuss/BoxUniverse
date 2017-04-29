@@ -6,12 +6,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.nsoft.boxuniverse.main.Game;
+import com.nsoft.boxuniverse.misc.BaseMaterial;
+import com.nsoft.boxuniverse.world.BaseBlock.BlockDefinition;
 
 /**
  * Map information
@@ -21,7 +25,7 @@ import com.nsoft.boxuniverse.main.Game;
 public class WorldLoader implements Serializable{
 	
 	public static WorldLoader WorldLoader = new WorldLoader();
-	public Blocks BlockList = new Blocks();
+	public Blocks BlockInformation = new Blocks();
 	public MetaData MetaData = new MetaData();
 	public WorldDefinition WorldDefinition;
 	
@@ -31,35 +35,29 @@ public class WorldLoader implements Serializable{
 	public void write(Json json) {
 		
 		json.writeValue("WorldDefinition",WorldDefinition);
-		json.writeValue("BlockList",BlockList);
+		json.writeValue("BlockInformation",BlockInformation);
 		json.writeValue("MetaData", MetaData);
 
 	}
 
 	@Override
 	public void read(Json json, JsonValue jsonData) {
-		
-		jsonData = jsonData.child;
+
 		WorldDefinition = json.readValue("WorldDefinition", WorldDefinition.class, jsonData);
-		jsonData = jsonData.next;
-		
+
+		BlockInformation = json.readValue("BlockInformation",Blocks.class, jsonData);
+
+		MetaData = json.readValue("MetaData",MetaData.class,jsonData);
 		
 	}
-	
-	public static BaseWorld createWorld(WorldDefinition def){
-		
-		WorldLoader.WorldDefinition = def;
-		return new BaseWorld(def);
-	}
-	
 	
 	/**
 	 * Debug method to save
 	 */
 	public static void save(){
 
-		Game.MainJson.setElementType(WorldLoader.class, "BlockList", BaseBlock.BlockDefinition.class);
-		
+		Game.MainJson.setElementType(WorldLoader.class, "BlockInformation", BaseBlock.BlockDefinition.class);
+		System.out.println(Game.MainJson.prettyPrint(WorldLoader));
 		try {
 			
 			File a = new File("src/com/nsoft/boxuniverse/resources/maps/map1.map");
@@ -73,14 +71,36 @@ public class WorldLoader implements Serializable{
 		}
 	}
 	
-	public static void load(){
+	public static BaseWorld loadNewMap(WorldDefinition def){
 		
-		WorldLoader = Game.MainJson.fromJson(WorldLoader.class, Gdx.files.internal("com/nsoft/boxuniverse/resources/Materials.list"));
+		WorldLoader.WorldDefinition = def;
+		return new BaseWorld(def,true);
+	}
+	public static BaseWorld loadMap(){
+		
+		BaseWorld b = new BaseWorld(WorldLoader.WorldDefinition, false);
+		
+		for(Entry<String, BlockDefinition> entry : WorldLoader.BlockInformation.BlockList.entrySet()) {
+			
+			b.handleBlockCreation(entry.getValue(),entry.getKey());
+		}
+		
+		BaseBlock.blockCount = WorldLoader.BlockInformation.BlockList.entrySet().size();
+		
+		
+		return b;
+	}
+	public static void load(String mapName){
+
+		WorldLoader = Game.MainJson.fromJson(WorldLoader.class, Gdx.files.internal(mapName));
 	}
 	
 	static class Blocks{
 		
 		public HashMap<String, BaseBlock.BlockDefinition> BlockList = new HashMap<String,BaseBlock.BlockDefinition>();
+		
+		public Blocks() {}
+
 
 	}
 	static class MetaData implements Serializable{

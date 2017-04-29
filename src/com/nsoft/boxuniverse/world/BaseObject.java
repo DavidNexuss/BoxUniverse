@@ -13,7 +13,8 @@ public abstract class BaseObject {
 
 	public abstract void draw(ModelBatch mb);
 	public abstract Vector3 getPosition();
-	public abstract void setPosition(int x,int y, int z);
+	public abstract void setPosition(float x,float y, int z);
+	public abstract void saveStatus();
 	
 }
 

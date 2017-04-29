@@ -9,6 +9,5 @@ public class Init {
 	public static void LoadEverything(){
 		
 		BaseMaterial.LoadMaterials();
-		Layer.init();
 	}
 }

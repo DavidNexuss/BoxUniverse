@@ -15,28 +15,48 @@ import com.nsoft.boxuniverse.world.WorldLoader;
 
 public class Game extends ApplicationAdapter {
 
-	public BaseWorld world;
+	public static BaseWorld world;
+	public static boolean isReady = false;
+	public static Thread Main;
 	public static Json MainJson = new Json();
 	@Override
 	public void create() {
 		Init.LoadEverything();
-		
+		Main = Thread.currentThread();
 		WorldDefinition def = new WorldDefinition();
 		def.NumLayers = 3;
 		def.BackGroundPath = "src/com/nsoft/boxuniverse/resources/materials/background.jpg";
-		world = WorldLoader.createWorld(def);
+		world = WorldLoader.loadNewMap(def);
 		
 		Gdx.input.setInputProcessor(world);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		
+		isReady = true;
+		
 	}
 	
+	public static void LoadMap(String mapName){
+		
+		isReady = false;
+		Init.LoadEverything();
+		WorldLoader.load(mapName);
+		world = null;
+		world = WorldLoader.loadMap();
+		
+		Gdx.input.setInputProcessor(world);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		
+		isReady = true;
+	}
 	@Override
 	public void render() {
 		
-		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		  Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		world.render();
+		if(isReady){
+			 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+			  Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			world.render();
+		}
+		 
 	}
 	
 	@Override

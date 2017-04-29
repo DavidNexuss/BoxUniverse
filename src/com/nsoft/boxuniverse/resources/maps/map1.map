@@ -3,7 +3,7 @@ WorldDefinition: {
 	NumLayers: 3
 	BackGroundPath: src/com/nsoft/boxuniverse/resources/materials/background.jpg
 }
-BlockList: {
+BlockInformation: {
 	BlockList: {
 		1: {
 			Position: [ 0, -10, 0 ]
@@ -12,27 +12,56 @@ BlockList: {
 			IsStatic: true
 		}
 		2: {
-			Position: [ 0, -10, 0 ]
+			Position: [ 0, -10, 1 ]
 			Size: [ 20, 1, 1 ]
 			MaterialName: Brick
 			IsStatic: true
 		}
 		3: {
-			Position: [ 0, -10, 0 ]
+			Position: [ 0, -10, 2 ]
 			Size: [ 20, 1, 1 ]
 			MaterialName: Brick
 			IsStatic: true
 		}
 		4: {
-			Position: [ -5, -3, 0 ]
+			Position: [ -5, -7.9850025, 0 ]
 			Size: [ 1, 1, 1 ]
-			MaterialName: Glass
+			Angle: 1.2022279E-5
+			MaterialName: Brick
+			IsStatic: false
+		}
+		5: {
+			Position: [ 3.0330691, -7.9850025, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 2.1249656E-5
+			MaterialName: Brick
+			IsStatic: false
+		}
+		6: {
+			Position: [ -1.0194836, -7.985232, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: -0.0015497975
+			MaterialName: Brick
+			IsStatic: false
+		}
+		7: {
+			Position: [ -9, -7.9850025, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 1.2113022E-5
+			MaterialName: Brick
+			IsStatic: false
+		}
+		8: {
+			Position: [ 1.0822879, -6.5550303, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 52.25019
+			MaterialName: Brick
 			IsStatic: false
 		}
 	}
 }
 MetaData: {
-	Author: DavidNexus
-	Date Of Creation: 2017/04/28 14:27:51
+	Author: Usuari
+	Date Of Creation: 2017/04/29 11:07:11
 }
 }
