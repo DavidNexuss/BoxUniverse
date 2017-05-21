@@ -5,6 +5,111 @@ WorldDefinition: {
 }
 BlockInformation: {
 	BlockList: {
+		22: {
+			Position: [ -0.16518714, 1.9009492, 0 ]
+			Size: [ 1, 1, 3 ]
+			Angle: 1.8382381
+			MaterialName: Glass
+			IsStatic: true
+		}
+		23: {
+			Position: [ -0.25507775, 3.881719, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 2.0396206
+			MaterialName: Glass
+			IsStatic: false
+		}
+		24: {
+			Position: [ -0.35878354, 5.868914, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 2.1647248
+			MaterialName: Glass
+			IsStatic: false
+		}
+		25: {
+			Position: [ -0.58511055, 9.867036, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 2.319526
+			MaterialName: Glass
+			IsStatic: false
+		}
+		26: {
+			Position: [ -0.44294584, 7.863698, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 2.2811043
+			MaterialName: Glass
+			IsStatic: false
+		}
+		10: {
+			Position: [ 11, -7.9850025, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 1.2006378E-5
+			MaterialName: CrackedStone
+			IsStatic: false
+		}
+		11: {
+			Position: [ -15.276662, -7.9850454, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: -1.6979642E-4
+			MaterialName: Ice
+			IsStatic: false
+		}
+		12: {
+			Position: [ -11.881133, -7.9850135, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: -1.0511962E-4
+			MaterialName: Ice
+			IsStatic: false
+		}
+		13: {
+			Position: [ -19.620472, -7.9850116, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 90.000175
+			MaterialName: Ice
+			IsStatic: false
+		}
+		14: {
+			Position: [ -9.413181, -7.985003, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: -179.99997
+			MaterialName: Glass
+			IsStatic: false
+		}
+		15: {
+			Position: [ -13.585887, -6.2354617, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 142.6489
+			MaterialName: Glass
+			IsStatic: false
+		}
+		16: {
+			Position: [ -24.253916, -1157.0701, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 298.40204
+			MaterialName: Glass
+			IsStatic: false
+		}
+		17: {
+			Position: [ -17.44643, -6.7215614, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 45.13338
+			MaterialName: Glass
+			IsStatic: false
+		}
+		18: {
+			Position: [ 0.034530327, -5.982387, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 0.30129406
+			MaterialName: Glass
+			IsStatic: false
+		}
+		19: {
+			Position: [ -0.0023533301, -4.0151167, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 0.73720765
+			MaterialName: Glass
+			IsStatic: false
+		}
 		1: {
 			Position: [ 0, -10, 0 ]
 			Size: [ 20, 1, 1 ]
@@ -24,44 +129,65 @@ BlockInformation: {
 			IsStatic: true
 		}
 		4: {
-			Position: [ -5, -7.9850025, 0 ]
+			Position: [ -6.998031, -7.9808607, 0 ]
 			Size: [ 1, 1, 1 ]
-			Angle: 1.2022279E-5
+			Angle: -0.018199665
 			MaterialName: Brick
 			IsStatic: false
 		}
 		5: {
-			Position: [ 3.0330691, -7.9850025, 0 ]
+			Position: [ -3.9762735, -7.983117, 0 ]
 			Size: [ 1, 1, 1 ]
-			Angle: 2.1249656E-5
+			Angle: 0.107985705
 			MaterialName: Brick
 			IsStatic: false
 		}
 		6: {
-			Position: [ -1.0194836, -7.985232, 0 ]
+			Position: [ -1.0970545, -7.9878445, 0 ]
 			Size: [ 1, 1, 1 ]
-			Angle: -0.0015497975
+			Angle: -90.07948
 			MaterialName: Brick
 			IsStatic: false
 		}
 		7: {
-			Position: [ -9, -7.9850025, 0 ]
+			Position: [ -5.5474234, -6.0477824, 0 ]
 			Size: [ 1, 1, 1 ]
-			Angle: 1.2113022E-5
+			Angle: 143.17903
 			MaterialName: Brick
 			IsStatic: false
 		}
 		8: {
-			Position: [ 1.0822879, -6.5550303, 0 ]
+			Position: [ 1.5504503, -7.986556, 0 ]
 			Size: [ 1, 1, 1 ]
-			Angle: 52.25019
+			Angle: -89.92359
 			MaterialName: Brick
+			IsStatic: false
+		}
+		9: {
+			Position: [ 5.9906597, -7.9850087, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 8.506027E-5
+			MaterialName: Slime
+			IsStatic: false
+		}
+		20: {
+			Position: [ -0.02319327, -2.0459256, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 1.1485002
+			MaterialName: Glass
+			IsStatic: false
+		}
+		21: {
+			Position: [ -0.085178606, -0.07437597, 0 ]
+			Size: [ 1, 1, 1 ]
+			Angle: 1.5678831
+			MaterialName: Glass
 			IsStatic: false
 		}
 	}
 }
 MetaData: {
 	Author: Usuari
-	Date Of Creation: 2017/04/29 11:07:11
+	Date Of Creation: 2017/04/29 16:27:14
 }
 }
